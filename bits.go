@@ -7,10 +7,13 @@ import (
 	"math"
 )
 
+//Len returns the number of bits of the input bytes array
 func Len(input []byte) int {
 	return len(input) * 8
 }
 
+//ShiftLeft performs left(<<) bit-shifting on entire byte array
+//shiftNum is the number of bits to be shifted
 func ShiftLeft(input []byte, shiftNum int) (result []byte, leftMostCarryFlag bool) {
 	if shiftNum >= 1 {
 		result = make([]byte, len(input))
@@ -37,6 +40,8 @@ func ShiftLeft(input []byte, shiftNum int) (result []byte, leftMostCarryFlag boo
 	return input, false
 }
 
+//ShiftRight performs right(>>) bit-shifting on entire byte array
+//shiftNum is the number of bits to be shifted
 func ShiftRight(input []byte, shiftNum int) (result []byte, rightMostCarryFlag bool) {
 	if shiftNum >= 1 {
 		result = make([]byte, len(input))
@@ -62,17 +67,17 @@ func ShiftRight(input []byte, shiftNum int) (result []byte, rightMostCarryFlag b
 	return input, false
 }
 
-//SubBits extracts bits([]byte) from an input([]byte)
+//SubBits extracts bits in the form of []byte from an input byte array
 //The startBitPos is starting from 1 (inclusive)
-//length is the number of bits to be extracted, if length is set to 0, then all bits starting from startBitPos would be returned
-func SubBits(input []byte, startBitPos int, length int) (result []byte, resultPtr *[]byte, err error) {
-	if length == 0 {
-		length = Len(input) - startBitPos + 1
+//numOfBits is the number of bits to be extracted, if length is set to 0, then all bits starting from startBitPos would be returned
+func SubBits(input []byte, startBitPos int, numOfBits int) (result []byte, resultPtr *[]byte, err error) {
+	if numOfBits == 0 {
+		numOfBits = Len(input) - startBitPos + 1
 	}
 	if startBitPos <= 0 {
 		return nil, nil, errors.New("startBitPos must be > 0")
 	}
-	endBitPos := startBitPos + length - 1
+	endBitPos := startBitPos + numOfBits - 1
 	if endBitPos > Len(input) {
 		return nil, nil, errors.New("Bit index out of bound")
 	}
