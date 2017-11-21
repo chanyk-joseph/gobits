@@ -16,5 +16,6 @@ Len returns the number of bits of the input bytes array
 func ShiftLeft(input []byte, shiftNum int) (result []byte, leftMostCarryFlag bool)
 ```
 ShiftLeft performs left(<<) bit-shifting on entire byte array
+
 shiftNum is the number of bits to be shifted
 
