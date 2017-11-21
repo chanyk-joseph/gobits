@@ -51,10 +51,51 @@ func Uint64(input []byte, startBitPos int) (result uint64, resultPtr *uint64, er
 
 ### func Uint32
 
-Uint32 converts []byte into unsigned 32 bits integer using 64 bits starting from the startBitPos
+Uint32 converts []byte into unsigned 32 bits integer using 32 bits starting from the startBitPos
 ```go
 func Uint32(input []byte, startBitPos int) (result uint32, resultPtr *uint32, err error)
 ```
 
+### func Uint16
+
+Uint16 converts []byte into unsigned 16 bits integer using 16 bits starting from the startBitPos
+```go
+func Uint16(input []byte, startBitPos int) (result uint16, resultPtr *uint16, err error)
+```
+
+### func Uint8
+
+Uint8 converts []byte into unsigned 8 bits integer using 8 bits starting from the startBitPos
+```go
+func Uint8(input []byte, startBitPos int) (result uint8, resultPtr *uint8, err error)
+```
+
+### func Int
+
+Int converts []byte into int using bits starting from the startBitPos
+```go
+func Int(input []byte, startBitPos int) (result int, resultPtr *int, err error)
+```
+
+### func Byte
+
+Byte extracts single byte from input using bits starting from the startBitPos
+```go
+func Byte(input []byte, startBitPos int) (result byte, resultPtr *byte, err error)
+```
+
+### func HexString
+
+HexString converts []byte into string
+```go
+func HexString(input []byte, startBitPos int, numOfBits int) (result string, resultPtr *string, err error)
+```
+
+### func String
+
+String converts []byte into string
+```go
+func String(input []byte, startBitPos int, numOfBits int) (result string, resultPtr *string, err error)
+```
 
 
