@@ -13,6 +13,7 @@ func Len(input []byte) int
 ### func ShiftLeft
 
 ShiftLeft performs left(<<) bit-shifting on entire byte array
+eg: 0001 1111 1000 -- shift 1 bit --> 0011 1111 0000
 ```go
 func ShiftLeft(input []byte, shiftNum int) (result []byte, leftMostCarryFlag bool)
 ```
