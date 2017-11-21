@@ -22,7 +22,7 @@ shiftNum is the number of bits to be shifted
 
 ShiftRight performs right(>>) bit-shifting on entire byte array
 ```go
-func ShiftRight(input []byte, shiftNum int) (result []byte, leftMostCarryFlag bool)
+func ShiftRight(input []byte, shiftNum int) (result []byte, rightMostCarryFlag bool)
 ```
 shiftNum is the number of bits to be shifted
 
