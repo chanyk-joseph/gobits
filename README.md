@@ -25,3 +25,12 @@ ShiftRight performs right(>>) bit-shifting on entire byte array
 func ShiftRight(input []byte, shiftNum int) (result []byte, leftMostCarryFlag bool)
 ```
 shiftNum is the number of bits to be shifted
+
+### func SubBits
+
+SubBits extracts bits in the form of []byte from an input byte array
+```go
+func SubBits(input []byte, startBitPos int, numOfBits int) (result []byte, resultPtr *[]byte, err error)
+```
+The startBitPos is starting from 1 (inclusive)<br />
+numOfBits is the number of bits to be extracted, if length is set to 0, then all bits starting from startBitPos would be returned
