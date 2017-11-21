@@ -34,3 +34,20 @@ func SubBits(input []byte, startBitPos int, numOfBits int) (result []byte, resul
 ```
 The startBitPos is starting from 1 (inclusive)<br />
 numOfBits is the number of bits to be extracted, if length is set to 0, then all bits starting from startBitPos would be returned
+
+### func Bool
+
+Bool converts bit at startBitPos to boolean
+```go
+func Bool(input []byte, startBitPos int) (result bool, resultPtr *bool, err error)
+```
+The startBitPos is starting from 1 (inclusive)
+
+### func Uint64
+
+Uint64 converts []byte into unsigned 64 bits integer using 64 bits starting from the startBitPos
+```go
+func Uint64(input []byte, startBitPos int) (result uint64, resultPtr *uint64, err error)
+```
+The startBitPos is starting from 1 (inclusive)
+
