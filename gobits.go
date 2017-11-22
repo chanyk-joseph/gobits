@@ -68,32 +68,32 @@ func ShiftRight(input []byte, shiftNum int) (result []byte, rightMostCarryFlag b
 }
 
 //SubBits extracts bits in the form of []byte from an input byte array
-//The startBitPos is starting from 1 (inclusive)
+//The startBitPos is starting from 0 (inclusive)
 //numOfBits is the number of bits to be extracted, if length is set to 0, then all bits starting from startBitPos would be returned
 func SubBits(input []byte, startBitPos int, numOfBits int) (result []byte, resultPtr *[]byte, err error) {
 	if numOfBits == 0 {
-		numOfBits = Len(input) - startBitPos + 1
+		numOfBits = Len(input) - startBitPos
 	}
-	if startBitPos <= 0 {
-		return nil, nil, errors.New("startBitPos must be > 0")
+	if startBitPos < 0 {
+		return nil, nil, errors.New("startBitPos must be >= 0")
 	}
 	endBitPos := startBitPos + numOfBits - 1
-	if endBitPos > Len(input) {
+	if endBitPos > Len(input)-1 {
 		return nil, nil, errors.New("Bit index out of bound")
 	}
 
-	startByteIndex := int((startBitPos - 1) / 8)
-	startBitIndexInByte := (startBitPos - 1) % 8
+	startByteIndex := int(startBitPos / 8)
+	startBitIndexInByte := startBitPos % 8
 
-	endByteIndex := int((endBitPos - 1) / 8)
-	endBitIndexInByte := (endBitPos - 1) % 8
+	endByteIndex := int(endBitPos / 8)
+	endBitIndexInByte := endBitPos % 8
 
 	result = make([]byte, endByteIndex-startByteIndex+1)
 	for i := startByteIndex; i <= endByteIndex; i++ {
 		result[i-startByteIndex] = input[i]
 	}
 
-	if endBitIndexInByte < 7 {
+	if endBitIndexInByte < 7 { //truncate the last byte
 		result[len(result)-1] = result[len(result)-1] >> uint(7-endBitIndexInByte)
 		result[len(result)-1] = result[len(result)-1] << uint(7-endBitIndexInByte)
 	}
@@ -108,18 +108,18 @@ func SubBits(input []byte, startBitPos int, numOfBits int) (result []byte, resul
 
 //Bool converts bit at startBitPos to boolean
 func Bool(input []byte, startBitPos int) (result bool, resultPtr *bool, err error) {
-	if Len(input)-startBitPos+1 < 1 {
+	if Len(input)-startBitPos < 1 {
 		return false, nil, errors.New("Input is less than 1 bit")
 	}
 
-	tmpArr, _, err := SubBits(input, startBitPos, 1)
+	tmpArr, _, err := SubBits(input, startBitPos, 0)
 	result = (tmpArr[0] & 0x80) != 0
 	return result, &result, err
 }
 
 //Uint64 converts []byte into unsigned 64 bits integer using bits starting from the startBitPos
 func Uint64(input []byte, startBitPos int) (result uint64, resultPtr *uint64, err error) {
-	if Len(input)-startBitPos+1 < 64 {
+	if Len(input)-startBitPos < 64 {
 		return 0, nil, errors.New("Input is less than 64 bits")
 	}
 
@@ -131,7 +131,7 @@ func Uint64(input []byte, startBitPos int) (result uint64, resultPtr *uint64, er
 
 //Uint32 converts []byte into unsigned 32 bits integer using bits starting from the startBitPos
 func Uint32(input []byte, startBitPos int) (result uint32, resultPtr *uint32, err error) {
-	if Len(input)-startBitPos+1 < 32 {
+	if Len(input)-startBitPos < 32 {
 		return 0, nil, errors.New("Input is less than 32 bits")
 	}
 
@@ -143,7 +143,7 @@ func Uint32(input []byte, startBitPos int) (result uint32, resultPtr *uint32, er
 
 //Uint16 converts []byte into unsigned 16 bits integer using bits starting from the startBitPos
 func Uint16(input []byte, startBitPos int) (result uint16, resultPtr *uint16, err error) {
-	if Len(input)-startBitPos+1 < 16 {
+	if Len(input)-startBitPos < 16 {
 		return 0, nil, errors.New("Input is less than 16 bits")
 	}
 
@@ -155,7 +155,7 @@ func Uint16(input []byte, startBitPos int) (result uint16, resultPtr *uint16, er
 
 //Uint8 converts []byte into unsigned 8 bits integer using bits starting from the startBitPos
 func Uint8(input []byte, startBitPos int) (result uint8, resultPtr *uint8, err error) {
-	if Len(input)-startBitPos+1 < 8 {
+	if Len(input)-startBitPos < 8 {
 		return 0, nil, errors.New("Input is less than 8 bits")
 	}
 
@@ -175,7 +175,7 @@ func Int(input []byte, startBitPos int) (result int, resultPtr *int, err error) 
 
 //Byte extracts single byte from input using bits starting from the startBitPos
 func Byte(input []byte, startBitPos int) (result byte, resultPtr *byte, err error) {
-	if Len(input)-startBitPos+1 < 8 {
+	if Len(input)-startBitPos < 8 {
 		return 0, nil, errors.New("Input is less than 8 bits")
 	}
 
@@ -187,7 +187,7 @@ func Byte(input []byte, startBitPos int) (result byte, resultPtr *byte, err erro
 
 //HexString converts []byte into string
 func HexString(input []byte, startBitPos int, numOfBits int) (result string, resultPtr *string, err error) {
-	if Len(input)-startBitPos+1 < numOfBits {
+	if Len(input)-startBitPos < numOfBits {
 		return "", nil, errors.New("Input is less than " + string(numOfBits) + " bits")
 	}
 
@@ -198,7 +198,7 @@ func HexString(input []byte, startBitPos int, numOfBits int) (result string, res
 
 //String converts []byte into string
 func String(input []byte, startBitPos int, numOfBits int) (result string, resultPtr *string, err error) {
-	if Len(input)-startBitPos+1 < numOfBits {
+	if Len(input)-startBitPos < numOfBits {
 		return "", nil, errors.New("Input is less than " + string(numOfBits) + " bits")
 	}
 
