@@ -4,7 +4,7 @@ Package gobits provides a set of functions to extract bits from input byte array
 ## Usage
 
 ```
-The startBitPos is starting from 0 (inclusive)
+**_startBitPos is starting from 0 (inclusive)_**
 ```
 
 ### func Len
